@@ -10,7 +10,7 @@
 <style>
   :root{
     --bg:#0B0F17;--line:#232B3D;--pill-bg:#121826;--ink:#EDEFF4;--ink-dim:#8A93A6;
-    --accent:#FFC93C;--accent2:#17E3A6;--live:#FF5C5C;
+    --accent:#FFC93C;--accent2:#17E3A6;--accent3: #FF0000;--live:#FF5C5C;
   }
   *{box-sizing:border-box;}
   html,body{height:100%;}
@@ -62,6 +62,8 @@
   td.club .fullname{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   td.pts{color:var(--accent);font-weight:800;font-family:'Archivo Black',sans-serif;}
   .qualzone td.club{border-left:3px solid var(--accent2);padding-left:8px;}
+  .disqualzone td.club{border-left:3px solid var(--accent3);padding-left:8px;}
+  .safezone td.club{border-left:3px solid var(--accent);padding-left:8px;}
   .note{font-size:11.5px;color:var(--ink-dim);margin:16px 0 0;line-height:1.5;padding-bottom:20px;}
   .empty,.loading,.error{text-align:center;padding:50px 20px;color:var(--ink-dim);font-size:13px;line-height:1.6;}
   .error{color:var(--live);}
@@ -189,7 +191,7 @@ function renderStandings(){
   body.innerHTML = currentDivData.standings.map(([code,mj,v,n,d,gs,ga,pts], i) => {
     const t = team(code);
     const gd = gs - ga;
-    return `<tr class="${i<qz?'qualzone':''}">
+    return `<tr class="${i < 4 ? 'qualzone' : i >= STANDINGS.length - 4 ? 'disqualzone' : 'safezone'}">
       <td class="club"><span class="pos">${i+1}</span><span class="crest" style="background:${t.c}">${code}</span><span class="fullname">${t.n}</span></td>
       <td>${mj}</td><td>${v}</td><td>${n}</td><td>${d}</td><td>${gs}</td><td>${ga}</td><td>${gd>0?'+':''}${gd}</td><td class="pts">${pts}</td>
     </tr>`;
