@@ -1,0 +1,31 @@
+{
+  "generated_at": "2026-09-27T21:17:41",
+  "competitions": [
+    {
+      "key": "urbh",
+      "label": "URBH-KBHB · National",
+      "divisions": [
+        {
+          "key": "d1h",
+          "label": "D1 Hommes"
+        },
+        {
+          "key": "d2h",
+          "label": "D2 Hommes"
+        },
+        {
+          "key": "d1f",
+          "label": "D1 Femmes"
+        },
+        {
+          "key": "d1fr",
+          "label": "D1 Femmes (R)"
+        },
+        {
+          "key": "d2f",
+          "label": "D2 Femmes"
+        }
+      ]
+    }
+  ]
+}
