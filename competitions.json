@@ -6,11 +6,11 @@
       "label": "URBH-KBHB",
       "site": "handballbelgium",
       "divisions": [
-        { "key": "d1h",  "label": "D1 Hommes",     "league_id": 18702, "season_id": 220, "qual_zone": 4 },
-        { "key": "d2h",  "label": "D2 Hommes",     "league_id": 18703, "season_id": 220, "qual_zone": 4 },
-        { "key": "d1f",  "label": "D1 Femmes",     "league_id": 18704, "season_id": 220, "qual_zone": 4 },
-        { "key": "d1fr", "label": "D1 Femmes (R)", "league_id": 18705, "season_id": 220, "qual_zone": 4 },
-        { "key": "d2f",  "label": "D2 Femmes",     "league_id": 18706, "season_id": 220, "qual_zone": 4 }
+        { "key": "d1h",  "label": "D1 Hommes",     "league_id": 18702, "season_id": 220, "qual_zone": 4, "disqual_zone":4 },
+        { "key": "d2h",  "label": "D2 Hommes",     "league_id": 18703, "season_id": 220, "qual_zone": 4, "disqual_zone":4 },
+        { "key": "d1f",  "label": "D1 Femmes",     "league_id": 18704, "season_id": 220, "qual_zone": 4, "disqual_zone":4 },
+        { "key": "d1fr", "label": "D1 Femmes (R)", "league_id": 18705, "season_id": 220, "qual_zone": 4, "disqual_zone":4 },
+        { "key": "d2f",  "label": "D2 Femmes",     "league_id": 18706, "season_id": 220, "qual_zone": 4, "disqual_zone":4 }
       ]
     }
   ]
