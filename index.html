@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HandScore BE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0F17;--line:#232B3D;--pill-bg:#121826;--ink:#EDEFF4;--ink-dim:#8A93A6;
+    --accent:#FFC93C;--accent2:#17E3A6;--live:#FF5C5C;
+  }
+  *{box-sizing:border-box;}
+  html,body{height:100%;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter',sans-serif;-webkit-font-smoothing:antialiased;}
+  .app{max-width:480px;margin:0 auto;min-height:100%;display:flex;flex-direction:column;}
+  header{position:sticky;top:0;z-index:10;padding:16px 18px 0;background:linear-gradient(180deg,var(--bg) 85%,transparent);}
+  .brand{font-family:'Archivo Black',sans-serif;font-size:20px;margin-bottom:12px;}
+  .brand span{color:var(--accent);}
+  .selects{display:flex;gap:8px;margin-bottom:12px;}
+  select{flex:1;background:var(--pill-bg);color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:7px 8px;font-size:12.5px;font-weight:600;}
+  .updated{font-size:11px;color:var(--ink-dim);margin:-6px 0 12px;}
+  .tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);}
+  .tab{flex:1;text-align:center;padding:10px 4px 12px;font-size:13px;font-weight:600;color:var(--ink-dim);background:none;border:none;cursor:pointer;border-bottom:2px solid transparent;}
+  .tab.active{color:var(--ink);border-color:var(--accent);}
+  main{flex:1;padding:0 0 40px;}
+  .view{display:none;} .view.active{display:block;}
+  .journee-bar{display:flex;gap:8px;overflow-x:auto;padding:14px 18px;scrollbar-width:none;border-bottom:1px solid var(--line);}
+  .journee-bar::-webkit-scrollbar{display:none;}
+  .jpill{flex:0 0 auto;padding:8px 14px;border-radius:20px;background:var(--pill-bg);color:var(--ink-dim);font-size:13px;font-weight:700;border:1px solid var(--line);cursor:pointer;white-space:nowrap;position:relative;}
+  .jpill.active{background:var(--accent);color:#0B0F17;border-color:var(--accent);}
+  .jpill.live::after{content:'';position:absolute;top:-3px;right:-3px;width:8px;height:8px;border-radius:50%;background:var(--live);border:2px solid var(--bg);}
+  .content-pad{padding:14px 18px 0;}
+  .live-pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--live);background:rgba(255,92,92,.12);padding:4px 10px;border-radius:20px;margin-bottom:12px;}
+  .live-pill .dot,.live-tag .dot{width:6px;height:6px;border-radius:50%;background:var(--live);animation:pulse 1.2s ease-in-out infinite;}
+  @keyframes pulse{0%,100%{opacity:1;}50%{opacity:.25;}}
+  .match{padding:12px 0;border-bottom:1px solid var(--line);}
+  .match:last-child{border-bottom:none;}
+  .match-row{display:flex;align-items:center;justify-content:space-between;gap:14px;}
+  .teams{flex:1;min-width:0;display:flex;flex-direction:column;gap:7px;}
+  .team{display:flex;align-items:center;gap:10px;font-size:14.5px;}
+  .team .crest{width:22px;height:22px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:800;color:#0B0F17;}
+  .team .name{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .team.winner .name{color:var(--ink);font-weight:600;} .team.loser .name{color:var(--ink-dim);}
+  .right-col{flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:7px;}
+  .score{font-family:'Archivo Black',sans-serif;font-size:16px;min-width:24px;text-align:right;}
+  .score.win{color:var(--accent2);} .score.lose{color:var(--ink-dim);}
+  .kickoff{font-family:'Archivo Black',sans-serif;font-size:15px;color:var(--accent);}
+  .live-tag{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:800;color:var(--live);}
+  .canc{font-size:12px;color:var(--ink-dim);font-style:italic;}
+  .mini-date{font-size:11px;color:var(--ink-dim);}
+  table.standings{width:100%;border-collapse:collapse;font-size:12px;}
+  table.standings th{text-align:right;font-size:9.5px;color:var(--ink-dim);font-weight:600;text-transform:uppercase;padding:0 0 8px;}
+  table.standings th:first-child{text-align:left;}
+  table.standings td{padding:9px 0;border-bottom:1px solid var(--line);text-align:right;}
+  table.standings tr:last-child td{border-bottom:none;}
+  td.pos{color:var(--ink-dim);width:16px;font-weight:600;}
+  td.club{display:flex;align-items:center;gap:8px;font-weight:600;padding-right:6px;text-align:left;}
+  td.club .crest{width:20px;height:20px;border-radius:6px;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;font-weight:800;color:#0B0F17;}
+  td.club .fullname{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  td.pts{color:var(--accent);font-weight:800;font-family:'Archivo Black',sans-serif;}
+  .qualzone td.club{border-left:3px solid var(--accent2);padding-left:8px;}
+  .note{font-size:11.5px;color:var(--ink-dim);margin:16px 0 0;line-height:1.5;padding-bottom:20px;}
+  .empty,.loading,.error{text-align:center;padding:50px 20px;color:var(--ink-dim);font-size:13px;line-height:1.6;}
+  .error{color:var(--live);}
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand">Hand<span>Score</span> BE</div>
+    <div class="selects">
+      <select id="compSelect"></select>
+      <select id="divSelect"></select>
+    </div>
+    <div class="updated" id="updatedLine">Chargement...</div>
+    <div class="tabs">
+      <button class="tab active" data-view="results">Résultats</button>
+      <button class="tab" data-view="standings">Classement</button>
+    </div>
+  </header>
+  <main>
+    <section class="view active" id="results">
+      <div class="journee-bar" id="journeeBar"></div>
+      <div class="content-pad"><div id="liveBadge"></div><div id="matchesList"><div class="loading">Chargement des matchs...</div></div></div>
+    </section>
+    <section class="view" id="standings">
+      <div class="content-pad">
+        <table class="standings">
+          <thead><tr><th></th><th>MJ</th><th>V</th><th>N</th><th>D</th><th>GS</th><th>GA</th><th>GD</th><th>Pts</th></tr></thead>
+          <tbody id="standingsBody"></tbody>
+        </table>
+        <p class="note" id="standingsNote"></p>
+      </div>
+    </section>
+  </main>
+</div>
+
+<script>
+let MANIFEST = null;
+let currentComp = null;
+let currentDivKey = null;
+let currentDivData = null;
+let currentGameday = 0;
+
+async function loadManifest(){
+  const res = await fetch('data/manifest.json', {cache:'no-store'});
+  if (!res.ok) throw new Error('manifest introuvable');
+  MANIFEST = await res.json();
+}
+
+async function loadDivision(key){
+  const res = await fetch(`data/${key}.json`, {cache:'no-store'});
+  if (!res.ok) throw new Error(`données introuvables pour ${key}`);
+  return res.json();
+}
+
+function fullDate(d){
+  const p = d.split('.');
+  if (p.length < 3) return d;
+  const yy = p[2].length === 2 ? '20'+p[2] : p[2];
+  return `${p[0]}.${p[1]}.${yy}`;
+}
+
+function team(code){ return currentDivData.teams[code] || {n:code, c:'#8A93A6'}; }
+
+function pickInitialGameday(gamedays){
+  const liveIdx = gamedays.findIndex(gd => gd.some(m => m[6] === 'LIVE'));
+  if (liveIdx !== -1) return liveIdx;
+  return gamedays.reduce((acc, gd, i) => gd.some(m => m[6] === 'FT') ? i : acc, 0);
+}
+
+function populateSelects(){
+  const compSel = document.getElementById('compSelect');
+  compSel.innerHTML = MANIFEST.competitions.map(c => `<option value="${c.key}">${c.label}</option>`).join('');
+  compSel.value = currentComp.key;
+
+  const divSel = document.getElementById('divSelect');
+  divSel.innerHTML = currentComp.divisions.map(d => `<option value="${d.key}">${d.label}</option>`).join('');
+  divSel.value = currentDivKey;
+}
+
+function renderPills(){
+  const bar = document.getElementById('journeeBar');
+  bar.innerHTML = '';
+  currentDivData.gamedays.forEach((gd, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'jpill' + (i === currentGameday ? ' active' : '') + (gd.some(m=>m[6]==='LIVE') ? ' live' : '');
+    btn.textContent = 'J' + (i + 1);
+    btn.addEventListener('click', () => { currentGameday = i; renderResults(); });
+    bar.appendChild(btn);
+  });
+  const active = bar.querySelector('.jpill.active');
+  if (active) active.scrollIntoView({inline:'center', block:'nearest'});
+}
+
+function renderMatches(){
+  const list = document.getElementById('matchesList');
+  const badge = document.getElementById('liveBadge');
+  const gd = currentDivData.gamedays[currentGameday] || [];
+  if (gd.length === 0){ list.innerHTML = '<div class="empty">Pas de match pour cette journée.</div>'; badge.innerHTML=''; return; }
+  badge.innerHTML = gd.some(m => m[6] === 'LIVE') ? '<div class="live-pill"><span class="dot"></span>En direct</div>' : '';
+
+  list.innerHTML = gd.map(([h,a,hs,as_,date,time,status]) => {
+    const th = team(h), ta = team(a);
+    const homeWin = status==='FT' && hs > as_, awayWin = status==='FT' && as_ > hs;
+    let rightCol;
+    if (status === 'FT') rightCol = `<span class="score ${homeWin?'win':'lose'}">${hs}</span><span class="score ${awayWin?'win':'lose'}">${as_}</span><span class="mini-date">${fullDate(date)}</span>`;
+    else if (status === 'LIVE') rightCol = `<span class="live-tag"><span class="dot"></span>LIVE</span><span class="mini-date">${time}</span>`;
+    else if (status === 'CANC') rightCol = `<span class="canc">Annulé</span>`;
+    else rightCol = `<span class="kickoff">${time||''}</span><span class="mini-date">${fullDate(date)}</span>`;
+    return `<div class="match"><div class="match-row">
+      <div class="teams">
+        <div class="team ${status==='FT'?(homeWin?'winner':'loser'):''}"><span class="crest" style="background:${th.c}">${h}</span><span class="name">${th.n}</span></div>
+        <div class="team ${status==='FT'?(awayWin?'winner':'loser'):''}"><span class="crest" style="background:${ta.c}">${a}</span><span class="name">${ta.n}</span></div>
+      </div>
+      <div class="right-col">${rightCol}</div>
+    </div></div>`;
+  }).join('');
+}
+
+function renderResults(){ renderPills(); renderMatches(); }
+
+function renderStandings(){
+  const body = document.getElementById('standingsBody');
+  const qz = currentDivData.qual_zone || 0;
+  body.innerHTML = currentDivData.standings.map(([code,mj,v,n,d,gs,ga,pts], i) => {
+    const t = team(code);
+    const gd = gs - ga;
+    return `<tr class="${i<qz?'qualzone':''}">
+      <td class="club"><span class="pos">${i+1}</span><span class="crest" style="background:${t.c}">${code}</span><span class="fullname">${t.n}</span></td>
+      <td>${mj}</td><td>${v}</td><td>${n}</td><td>${d}</td><td>${gs}</td><td>${ga}</td><td>${gd>0?'+':''}${gd}</td><td class="pts">${pts}</td>
+    </tr>`;
+  }).join('');
+  document.getElementById('standingsNote').textContent = `${currentDivData.label} — mis à jour automatiquement.`;
+}
+
+async function selectDivision(key){
+  currentDivKey = key;
+  document.getElementById('matchesList').innerHTML = '<div class="loading">Chargement...</div>';
+  try{
+    currentDivData = await loadDivision(key);
+    currentGameday = pickInitialGameday(currentDivData.gamedays);
+    renderResults();
+    renderStandings();
+    document.getElementById('updatedLine').textContent = 'Données à jour (dernier scrape automatique)';
+  }catch(e){
+    document.getElementById('matchesList').innerHTML = `<div class="error">Erreur : ${e.message}</div>`;
+  }
+}
+
+async function init(){
+  try{
+    await loadManifest();
+    currentComp = MANIFEST.competitions[0];
+    currentDivKey = currentComp.divisions[0].key;
+    populateSelects();
+    await selectDivision(currentDivKey);
+  }catch(e){
+    document.getElementById('matchesList').innerHTML = `<div class="error">Impossible de charger les données (${e.message}). As-tu bien lancé le scraper au moins une fois ?</div>`;
+  }
+}
+
+document.getElementById('compSelect').addEventListener('change', e => {
+  currentComp = MANIFEST.competitions.find(c => c.key === e.target.value);
+  document.getElementById('divSelect').innerHTML = currentComp.divisions.map(d => `<option value="${d.key}">${d.label}</option>`).join('');
+  selectDivision(currentComp.divisions[0].key);
+});
+document.getElementById('divSelect').addEventListener('change', e => selectDivision(e.target.value));
+document.querySelectorAll('.tab').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('.tab').forEach(b=>b.classList.remove('active'));
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById(btn.dataset.view).classList.add('active');
+  });
+});
+
+init();
+</script>
+</body>
+</html>
