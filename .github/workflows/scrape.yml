@@ -1,0 +1,58 @@
+name: Scrape & Deploy HandScore BE
+
+on:
+  schedule:
+    # Toutes les 20 min le weekend (10h-21h UTC ≈ 12h-23h heure belge)
+    - cron: "*/20 10-21 * * 6,0"
+    # Une fois par jour en semaine, juste pour capter les reports de match
+    - cron: "0 7 * * 1-5"
+  workflow_dispatch: {}   # bouton "Run workflow" manuel dans l'onglet Actions
+  push:
+    branches: [ main ]    # redéploie aussi à chaque modification (ex: nouvelle division)
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer les dépendances
+        run: pip install requests beautifulsoup4
+
+      - name: Lancer le scraper
+        run: python scraper.py
+
+      - name: Committer le JSON généré si changé
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "chore: refresh scraped data"
+          file_pattern: "data/*.json"
+
+  deploy-pages:
+    needs: scrape
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: "."
+      - id: deployment
+        uses: actions/deploy-pages@v4
