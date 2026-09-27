@@ -188,6 +188,7 @@ function renderResults(){ renderPills(); renderMatches(); }
 function renderStandings(){
   const body = document.getElementById('standingsBody');
   const qz = currentDivData.qual_zone || 0;
+  const dqz = currentDivData.disqual_zone || 0;
   body.innerHTML = currentDivData.standings.map(([code,mj,v,n,d,gs,ga,pts], i) => {
     const t = team(code);
     const gd = gs - ga;
