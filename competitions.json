@@ -12,6 +12,17 @@
         { "key": "d1fr", "label": "D1 Femmes (R)", "league_id": 18705, "season_id": 220, "qual_zone": 4 },
         { "key": "d2f",  "label": "D2 Femmes",     "league_id": 18706, "season_id": 220, "qual_zone": 4 }
       ]
+
+      "key": "lfh",
+      "label": "LFH",
+      "site": "handballbelgium",
+      "divisions": [
+        { "key": "lfhh",  "label": "LFH Hommes",              "league_id": 18692, "season_id": 220, "qual_zone": 4 },
+        { "key": "lfhf",  "label": "LFH Femmes",              "league_id": 18693, "season_id": 220, "qual_zone": 4 },
+        { "key": "pl",  "label": "Promotion Liège",           "league_id": 18698, "season_id": 220, "qual_zone": 4 },
+        { "key": "pbh", "label": "Promotion Brabant-Hainaut", "league_id": 19342, "season_id": 220, "qual_zone": 4 }
+      ]
+      
     }
   ]
 }
