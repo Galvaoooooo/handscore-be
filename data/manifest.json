@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-27T21:42:05",
+  "generated_at": "2026-09-27T22:41:39",
   "competitions": [
     {
       "key": "urbh",
@@ -24,6 +24,28 @@
         {
           "key": "d2f",
           "label": "D2 Femmes"
+        }
+      ]
+    },
+    {
+      "key": "lfh",
+      "label": "LFH",
+      "divisions": [
+        {
+          "key": "lfhh",
+          "label": "LFH Hommes"
+        },
+        {
+          "key": "lfhf",
+          "label": "LFH Femmes"
+        },
+        {
+          "key": "pl",
+          "label": "Promotion Liège"
+        },
+        {
+          "key": "pbh",
+          "label": "Promotion Brabant-Hainaut"
         }
       ]
     }
