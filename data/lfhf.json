@@ -258,8 +258,8 @@
         "SCHED"
       ],
       [
-        "WPW",
-        "WWL",
+        "ETW",
+        "UBW",
         null,
         null,
         "18.10.2026",
@@ -267,8 +267,8 @@
         "SCHED"
       ],
       [
-        "ETW",
-        "UBW",
+        "WPW",
+        "WWL",
         null,
         null,
         "18.10.2026",
@@ -410,8 +410,8 @@
         "SCHED"
       ],
       [
-        "WPW",
-        "KWL",
+        "ETW",
+        "WWL",
         null,
         null,
         "29.11.2026",
@@ -419,8 +419,8 @@
         "SCHED"
       ],
       [
-        "ETW",
-        "WWL",
+        "WPW",
+        "KWL",
         null,
         null,
         "29.11.2026",
