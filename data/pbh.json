@@ -528,8 +528,8 @@
         "SCHED"
       ],
       [
-        "PPB",
-        "EDC",
+        "PPB2",
+        "PB3",
         null,
         null,
         "24.10.2026",
@@ -537,8 +537,8 @@
         "SCHED"
       ],
       [
-        "PPB2",
-        "PB3",
+        "PPB",
+        "EDC",
         null,
         null,
         "24.10.2026",
