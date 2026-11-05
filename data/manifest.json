@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-11-04T15:00:02",
+  "generated_at": "2026-11-05T15:06:17",
   "competitions": [
     {
       "key": "urbh",
@@ -8,6 +8,10 @@
         {
           "key": "d1h",
           "label": "D1 Hommes"
+        },
+        {
+          "key": "d2h",
+          "label": "D2 Hommes"
         },
         {
           "key": "d1f",
