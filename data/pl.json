@@ -1,6 +1,27 @@
 {
-  "teams": {},
-  "gamedays": [],
+  "teams": {
+    "WPP": {
+      "n": "Wanzois Passion Promo Lg (Senior M)",
+      "c": "#FF6B6B"
+    },
+    "VPL": {
+      "n": "Verviers Promo Lg (Senior M)",
+      "c": "#FFC93C"
+    }
+  },
+  "gamedays": [
+    [
+      [
+        "WPP",
+        "VPL",
+        null,
+        null,
+        "",
+        null,
+        "CANC"
+      ]
+    ]
+  ],
   "standings": [
     [
       "SPL",
