@@ -1,27 +1,6 @@
 {
-  "teams": {
-    "SAB": {
-      "n": "Sezoens Achilles Bocholt",
-      "c": "#FF6B6B"
-    },
-    "SIN": {
-      "n": "Sint-Truiden",
-      "c": "#FFC93C"
-    }
-  },
-  "gamedays": [
-    [
-      [
-        "SAB",
-        "SIN",
-        null,
-        null,
-        "",
-        null,
-        "CANC"
-      ]
-    ]
-  ],
+  "teams": {},
+  "gamedays": [],
   "standings": [
     [
       "SAB",
